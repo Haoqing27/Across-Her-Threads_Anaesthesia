@@ -15,11 +15,6 @@ To challenge harmful societal expectations placed on girls, advocate for self-wo
 
 ---
 
-## 👩‍💻 Team Members  
-- Kiara (Project Creator)
-
----
-
 ## 👥 Target Audience  
 This website is made for:  
 - Teenage girls and young women navigating self-image and societal pressure  
