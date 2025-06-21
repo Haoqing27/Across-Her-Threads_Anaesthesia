@@ -1,6 +1,6 @@
 
 ## 🎥 Demo Video  
-[![Watch the video]([https://img.youtube.com/vi/YOUR_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID_HERE](https://youtu.be/JS_zrMCGSMc))  
+[![Watch the video]([https://img.youtube.com/vi/YOUR_VIDEO_ID_HERE/0.jpg)]([https://www.youtube.com/watch?v=YOUR_VIDEO_ID_HERE](https://youtu.be/JS_zrMCGSMc](https://youtu.be/JS_zrMCGSMc)))  
 Click the image to watch the full project walkthrough on YouTube.
 
 ---
