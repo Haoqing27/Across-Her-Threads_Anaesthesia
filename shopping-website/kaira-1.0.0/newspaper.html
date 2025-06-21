@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Her Times</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Text:wght@400;600&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(45deg, #f5f1eb, #ede8e0);
+            font-family: 'Crimson Text', serif;
+            color: #2c2c2c;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .newspaper-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .newspaper {
+            background: #f8f5f0;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 3px solid #2c2c2c;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-style: preserve-3d;
+        }
+        
+        .newspaper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter></defs><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>') repeat;
+            pointer-events: none;
+        }
+        
+        .page {
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 3px solid #2c2c2c;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .page:last-child {
+            border-block-end: none;
+            margin-block-end: 0;
+        }
+        
+        .page.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .header-lines {
+            height: 4px;
+            background: #2c2c2c;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .header-lines::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #2c2c2c;
+        }
+        
+        .masthead {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .newspaper-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            margin: 0;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+        
+        .breaking-news {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.0rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin: 10px 0;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+        }
+        
+        .issue-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .decorative-star {
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .decorative-star:hover {
+            transform: rotate(180deg) scale(1.2);
+        }
+        
+        .main-headline {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .headline-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: 3px;
+            margin: 0;
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .headline-text:hover {
+            transform: scale(1.05);
+            color: #d32f2f;
+            text-shadow: 5px 5px 0px rgba(211, 47, 47, 0.3);
+        }
+        
+        .red-headline {
+            color: #d32f2f;
+            font-size: 2.5rem;
+        }
+        
+        .separator {
+            block-size: 3px;
+            background: #2c2c2c;
+            margin: 30px 0;
+            margin-block-start: 30px;
+            margin-block-end: 30px;
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 50%, #d0d0d0 100%);
+            border: 2px solid #2c2c2c;
+            position: relative;
+            overflow: hidden;
+            margin: 20px 0;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .image-placeholder:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: transparent;
+            border: 3px solid #2c2c2c;
+            backdrop-filter: blur(2px);
+        }
+        
+        .image-placeholder:hover .placeholder-text {
+            opacity: 0.3;
+            transform: scale(0.9);
+        }
+        
+        .image-large {
+            height: 400px;
+        }
+        
+        
+        .placeholder-text {
+            text-align: center;
+            color: #666;
+            pointer-events: none;
+            transition: all 0.5s ease;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .placeholder-text p {
+            margin: 5px 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .placeholder-text img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 3px;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .quote-section {
+            text-align: center;
+            margin: 50px 0;
+            padding: 20px;
+            border-block-start: 2px solid #2c2c2c;
+            border-block-end: 2px solid #2c2c2c;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .quote-section:hover {
+            background: rgba(44, 44, 44, 0.05);
+            transform: translateY(-2px);
+        }
+        
+        .quote-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+        
+        .content-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 15px 0;
+            text-align: justify;
+        }
+        
+        .content-left {
+            float: left;
+            width: 48%;
+            margin-right: 4%;
+        }
+        
+        .content-right {
+            float: right;
+            width: 48%;
+        }
+        
+        .image-left {
+            float: left;
+            width: 40%;
+            height: 250px;
+            margin-right: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .image-right {
+            float: right;
+            width: 40%;
+            height: 250px;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        .author-credit {
+            text-align: right;
+            font-style: italic;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .footer-decorations {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .ornament {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #2c2c2c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .ornament:hover {
+            transform: rotate(360deg) scale(1.2);
+            background: #2c2c2c;
+            color: #f8f5f0;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #f5f1eb, #ede8e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+        }
+        
+        .loading-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c2c2c;
+            text-align: center;
+            animation: loadingPulse 2s infinite;
+        }
+        
+        @keyframes loadingPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        
+        .transparent-link-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    width: 80px;
+    height: 80px;
+    background: #f8f5f0;
+    border: 2px solid #e8e3dc;
+    border-radius: 50%;
+    text-decoration: none;
+    color: #2c2c2c;
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 
+        0 8px 32px rgba(44, 44, 44, 0.12),
+        0 4px 16px rgba(44, 44, 44, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4px; /* extra padding for better text spacing */
+}
+
+.transparent-link-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s ease;
+}
+
+.transparent-link-btn:hover::before {
+    left: 100%;
+}
+
+.transparent-link-btn:hover {
+    background: linear-gradient(135deg, #ffffff, #f8f5f0);
+    border: 2px solid #d4cfc4;
+    color: #1a1a1a;
+    transform: translateY(-8px) scale(1.12);
+    box-shadow: 
+        0 16px 48px rgba(44, 44, 44, 0.25),
+        0 8px 24px rgba(44, 44, 44, 0.15),
+        inset 0 2px 0 rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    letter-spacing: 1.2px;
+}
+
+.transparent-link-btn:active {
+    transform: translateY(-4px) scale(1.06);
+    box-shadow: 
+        0 8px 24px rgba(44, 44, 44, 0.2),
+        0 4px 12px rgba(44, 44, 44, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.transparent-link-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.6s ease;
+    pointer-events: none;
+}
+
+.transparent-link-btn:hover::after {
+    width: 240px;
+    height: 240px;
+}
+
+@media (max-width: 768px) {
+    .transparent-link-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 64px;
+        height: 64px;
+        font-size: 0.65rem;
+        letter-spacing: 1px;
+    }
+
+    .transparent-link-btn:hover::after {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+
+        /* Music Control Styles */
+        .music-control {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: rgba(44, 44, 44, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .music-control:hover {
+            transform: scale(1.1);
+            background: rgba(44, 44, 44, 1);
+        }
+        
+        .music-control.playing {
+            animation: musicPulse 2s infinite;
+        }
+        
+        @keyframes musicPulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+            50% { box-shadow: 0 4px 25px rgba(211, 47, 47, 0.4); }
+        }
+        
+        .music-icon {
+            color: #f8f5f0;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        .scroll-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(44, 44, 44, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-dot.active {
+            background: #2c2c2c;
+            transform: scale(1.5);
+        }
+        
+    
+        /* Marquee Styles */
+        .marquee-container {
+            margin-block-start: 40px;
+            padding: 20px 0;
+            background: #2c2c2c;
+            overflow: hidden;
+            white-space: nowrap;
+            border-block-start: 3px solid #0c0000;
+            border-block-end: 3px solid #070000;
+            position: relative;
+        }
+        
+        .marquee-content {
+            display: inline-block;
+            animation: marqueeScroll 45s linear infinite;
+            will-change: transform;
+        }
+        
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+        
+        .marquee-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #f8f5f0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes marqueeScroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .newspaper {
+                padding: 20px;
+            }
+            
+            .newspaper-title {
+                font-size: 2rem;
+                letter-spacing: 2px;
+            }
+            
+            .headline-text {
+                font-size: 2rem;
+                letter-spacing: 2px;
+            }
+            
+            .content-left, .content-right {
+                float: none;
+                width: 100%;
+                margin-right: 0;
+            }
+            
+            .image-left, .image-right {
+                float: none;
+                width: 100%;
+                margin: 15px 0;
+            }
+            
+            .music-control {
+                top: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .music-icon {
+                font-size: 1.2rem;
+            }
+            
+            .marquee-text {
+                font-size: 1.1rem;
+                letter-spacing: 1px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-text">Preparing the story...</div>
+    </div>
+    
+    <!-- Music Control Button -->
+    <button class="music-control" id="musicControl" onclick="toggleMusic()">
+        <span class="music-icon" id="musicIcon">♪</span>
+    </button>
+    
+    <!-- Background Audio -->
+    <audio id="backgroundMusic" preload="auto" loop>
+        <!-- Using a royalty-free ambient music URL -->
+        <source src="../images/bg-music.mp3" type="audio/mpeg">
+        <!-- Fallback: We'll generate music using Tone.js -->
+    </audio>
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-dot active" data-page="1"></div>
+        <div class="scroll-dot" data-page="2"></div>
+        <div class="scroll-dot" data-page="3"></div>
+        <div class="scroll-dot" data-page="4"></div>
+    </div>
+    
+    <div class="newspaper-container">
+        <div class="newspaper" id="newspaper">
+            <!-- Cover Page -->
+            <div class="page visible" id="page1">
+                <div class="header-lines"></div>
+                <div class="masthead">
+                    <h1 class="breaking-news">BREAKING NEWS</h1>
+                    <div class="issue-info">
+                        <span>VOL. 11, NO. 5</span>
+                        <span class="decorative-star">✱</span>
+                        <span>The Her Times</span>
+                        <span class="decorative-star">✱</span>
+                        <span>31 MAY 2025</span>
+                    </div>
+                </div>
+                
+                <div class="main-headline">
+                    <h2 class="headline-text">SHE WROTE WITH<br>NO APOLOGY</h2>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="image-placeholder image-large">
+                    <div class="placeholder-text">
+                       <img src="../images/newspaper-cover.jpg">
+                    </div>
+                </div>
+                
+                <div class="quote-section">
+                    <p class="quote-text">"TO THE DAUGHTERS OF TOMORROW—THEY WROTE YOU THIS"</p>
+                </div>
+                
+                <div class="footer-decorations">
+                    <div class="ornament">⚜</div>
+                    <div class="ornament">✱</div>
+                </div>
+            </div>
+
+            <!-- Page 2: "You're Too Much" -->
+            <div class="page" id="page2">
+                <div class="header-lines"></div>
+                <div class="masthead">
+                    <h1 class="newspaper-title">The Her Times</h1>
+                    <div class="issue-info">
+                        <span>Penang, Bukit Mertajam</span>
+                        <span>Saturday 31 May 2025</span>
+                    </div>
+                </div>
+                
+                <div class="main-headline">
+                    <h2 class="headline-text">READ THIS IF YOU'VE EVER<br>BEEN TOLD</h2>
+                    <h2 class="headline-text red-headline">"YOU'RE TOO MUCH"</h2>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="clearfix">
+                    <div class="image-placeholder image-left">
+                        <div class="placeholder-text">
+                            <img src="../images/wzt.jpg" alt="Wu Zetian">
+                        </div>
+                    </div>
+                    
+                    <div class="subtitle">To Girls Who are underestimated</div>
+                    
+                    <div class="content-text">
+                        They called me ruthless. I called myself necessary. When the world was built to keep women quiet, I chose to speak louder. When they placed the throne far above me, I built my own path to it. Not with softness—but with strategy, strength, and survival.
+                    </div>
+                    
+                    <div class="content-text">
+                        If they ever tell you that your ambition is too much, remember this:
+                    </div>
+                    
+                    <div class="quote-section">
+                        <p class="quote-text">"Power is not masculine. Power is yours to define."</p>
+                    </div>
+                    
+                    <div class="author-credit">
+                        — Wu Zetian<br>
+                        Emperor of Zhou
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 3: "Velvet Glove, Iron Mind" -->
+            <div class="page" id="page3">
+                <div class="header-lines"></div>
+                <div class="masthead">
+                    <h1 class="newspaper-title">The Her Times</h1>
+                    <div class="issue-info">
+                        <span>Penang, Bukit Mertajam</span>
+                        <span>Saturday 31 May 2025</span>
+                    </div>
+                </div>
+                
+                <div class="main-headline">
+                    <h2 class="headline-text">VELVET GLOVE, IRON MIND</h2>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="clearfix">
+                    <div class="content-left">
+                        <div class="subtitle">To Girls Who Balance Grace and Grit</div>
+                        
+                        <div class="content-text">
+                            I ruled in velvet gloves, but they never saw the steel beneath them.
+                        </div>
+                        
+                        <div class="content-text">
+                            They saw a patron of the arts. I was that. But I was also a protector, a diplomat, a strategist in silk. In a world that demanded women remain behind the curtain, I stepped out—in elegance, in intelligence, in control.
+                        </div>
+                        
+                        <div class="content-text">
+                            You do not have to shout to lead. Let your vision speak. Let your creativity command.
+                        </div>
+                        
+                        <div class="quote-section">
+                            <p class="quote-text">"Style is not a mask. It is your armor. Wear it boldly."</p>
+                        </div>
+                        
+                        <div class="author-credit">
+                            — Isabella<br>
+                            Lady of Mantua
+                        </div>
+                    </div>
+                    
+                    <div class="image-placeholder image-right">
+                        <div class="placeholder-text">
+                            <img src="../images/isabella.jpg" alt="Isabella">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 4: "She Gave Us Brain" -->
+            <div class="page" id="page4">
+                <div class="header-lines"></div>
+                <div class="masthead">
+                    <h1 class="newspaper-title">The Her Times</h1>
+                    <div class="issue-info">
+                        <span>Penang, Bukit</span>
+                        <span>Saturday 31 May 2025</span>
+                    </div>
+                </div>
+                
+                <div class="main-headline">
+                    <h2 class="headline-text">SHE GAVE US BRAIN</h2>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="image-placeholder image-large">
+                    <div class="placeholder-text">
+                        <img src="../images/fatima.jpg" alt="Fatima in Library">
+                    </div>
+                </div>
+                
+                <div class="clearfix">
+                    <div class="content-left">
+                        <div class="content-text">
+                            I was never loud, but my legacy echoes through centuries.
+                        </div>
+                        
+                        <div class="content-text">
+                            You may not find my name in gilded places or sung by poets, but walk through every gate of university, you will find me there.
+                        </div>
+                        
+                        <div class="content-text">
+                            In a world that measured women by their dowries and silence, I chose to spend my wealth on knowledge, to gift futures to those who could not afford.
+                        </div>
+                    </div>
+                    
+                    <div class="content-right">
+                        <div class="subtitle">"Education is the quiet rebellion."</div>
+                        
+                        <div class="content-text">
+                            Let your work speak for you.<br>
+                            Let your purpose ripple outward like a stone dropped in still water.<br>
+                            It may take centuries for the world to catch up to your vision —
+                        </div>
+                        
+                        <div class="content-text">
+                            but do it anyway.
+                        </div>
+                        
+                        <div class="author-credit">
+                            — Fatima<br>
+                            Mother of Knowledge
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Final Quote Marquee -->
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <span class="marquee-text">These 3 unstoppable women broke every rule — and rewrote what it means to be powerful. Every woman needs to know their story! ✱ These 3 unstoppable women broke every rule — and rewrote what it means to be powerful. Every woman needs to know their story! ✱ These 3 unstoppable women broke every rule — and rewrote what it means to be powerful. Every woman needs to know their story! ✱</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+            <div class="transparent-link-btn">
+                <a href="thehertimes.html" class="btn">Next</a>
+            </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone.js/14.8.49/Tone.min.js"></script>
+    <script>
+        let musicPlaying = false;
+        let ambientSynth;
+        
+        // Initialize Tone.js for background music
+        function initializeMusic() {
+            // Create ambient background music
+            ambientSynth = new Tone.PolySynth(Tone.Synth, {
+                oscillator: {
+                    type: "sine"
+                },
+                envelope: {
+                    attack: 2,
+                    decay: 1,
+                    sustain: 0.3,
+                    release: 4
+                }
+            }).toDestination();
+            
+            // Add reverb effect
+            const reverb = new Tone.Reverb(4).toDestination();
+            ambientSynth.connect(reverb);
+            
+            // Set volume lower for ambient effect
+            ambientSynth.volume.value = -20;
+        }
+        
+        // Play ambient music sequence
+        function playAmbientMusic() {
+            const notes = ["C4", "E4", "G4", "C5", "A4", "F4"];
+            let noteIndex = 0;
+            
+            function playNextNote() {
+                if (musicPlaying) {
+                    ambientSynth.triggerAttackRelease(notes[noteIndex], "2n");
+                    noteIndex = (noteIndex + 1) % notes.length;
+                    setTimeout(playNextNote, 3000 + Math.random() * 2000);
+                }
+            }
+            
+            playNextNote();
+        }
+        
+        // Toggle music function
+        async function toggleMusic() {
+            const musicControl = document.getElementById('musicControl');
+            const musicIcon = document.getElementById('musicIcon');
+            
+            if (!musicPlaying) {
+                await Tone.start();
+                if (!ambientSynth) {
+                    initializeMusic();
+                }
+                musicPlaying = true;
+                musicControl.classList.add('playing');
+                musicIcon.textContent = '♫';
+                playAmbientMusic();
+            } else {
+                musicPlaying = false;
+                musicControl.classList.remove('playing');
+                musicIcon.textContent = '♪';
+            }
+        }
+        
+        // Remove loading overlay
+        setTimeout(() => {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.classList.add('fade-out');
+            setTimeout(() => {
+                overlay.remove();
+            }, 1000);
+        }, 1500);
+        
+        // Scroll-based visibility and indicator updates
+        function updateVisibility() {
+            const pages = document.querySelectorAll('.page');
+            const scrollDots = document.querySelectorAll('.scroll-dot');
+            const windowHeight = window.innerHeight;
+            const scrollTop = window.pageYOffset;
+            
+            pages.forEach((page, index) => {
+                const rect = page.getBoundingClientRect();
+                const pageTop = rect.top + scrollTop;
+                const pageBottom = pageTop + rect.height;
+                
+                // Show page when it's 30% visible
+                if (scrollTop + windowHeight > pageTop + (rect.height * 0.3)) {
+                    page.classList.add('visible');
+                }
+                
+                // Update scroll indicator
+                if (scrollTop + windowHeight/2 >= pageTop && scrollTop + windowHeight/2 <= pageBottom) {
+                    scrollDots.forEach(dot => dot.classList.remove('active'));
+                    scrollDots[index]?.classList.add('active');
+                }
+            });
+        }
+        
+        // Smooth scroll to page when clicking scroll dots
+        document.querySelectorAll('.scroll-dot').forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                const targetPage = document.getElementById(`page${index + 1}`);
+                targetPage.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+        
+        // Initialize visibility
+        updateVisibility();
+        
+        // Update visibility on scroll
+        window.addEventListener('scroll', updateVisibility);
+        
+        // Interactive quote sections
+        document.querySelectorAll('.quote-section').forEach(quote => {
+            quote.addEventListener('click', () => {
+                quote.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    quote.style.transform = 'translateY(-2px)';
+                }, 150);
+            });
+        });
+        
+        // Smooth scroll behavior for ornaments
+        document.querySelectorAll('.ornament').forEach(ornament => {
+            ornament.addEventListener('click', () => {
+                window.scrollTo({
+                    top: window.pageYOffset + 200,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Auto-reveal pages on scroll (for better UX)
+        let ticking = false;
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateVisibility);
+                ticking = true;
+                setTimeout(() => { ticking = false; }, 16);
+            }
+        }
+        
+        window.addEventListener('scroll', requestTick);
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ') {
+                e.preventDefault();
+                window.scrollBy({ top: window.innerHeight * 0.8, behavior: 'smooth' });
+            }
+            if (e.key === 'm' || e.key === 'M') {
+                toggleMusic();
+            }
+        });
+    </script>
+</body>
+</html>

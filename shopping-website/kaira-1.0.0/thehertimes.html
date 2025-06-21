@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE HER TIMES</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Amiri:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #2c1810, #8b4513);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: #f4e4bc;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .ethereal-threads {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+        
+        .thread {
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(to bottom, #d4af37, #daa520, #b8860b);
+            opacity: 0.6;
+            animation: weave 20s linear infinite;
+        }
+        
+        @keyframes weave {
+            0% {
+                transform: translateX(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateX(50vw) rotate(180deg);
+            }
+            100% {
+                transform: translateX(100vw) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .floating-symbols {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .symbol {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.4;
+            animation: floatSymbol 15s linear infinite;
+        }
+        
+        @keyframes floatSymbol {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.2);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            z-index: 1000;
+            padding: 20px 40px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f4e4bc;
+            letter-spacing: 4px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            background: linear-gradient(45deg, #d4af37, #daa520, #f4e4bc, #b8860b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 300% 300%;
+            animation: shimmer 8s ease-in-out infinite;
+        }
+        
+        .caption {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #f4e4bc;
+            letter-spacing: 4px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            background: linear-gradient(45deg, #d4af37, #daa520, #f4e4bc, #b8860b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 300% 300%;
+            animation: shimmer 8s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .main-container {
+            margin-top: 120px;
+            padding: 40px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .newspapers-scroll {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .newspapers-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .newspapers-scroll::-webkit-scrollbar-track {
+            background: rgba(241, 241, 241, 0.1);
+            border-radius: 4px;
+        }
+
+        .newspapers-scroll::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.5);
+            border-radius: 4px;
+        }
+
+        .newspapers-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 175, 55, 0.8);
+        }
+
+        .newspaper {
+            flex-shrink: 0;
+            width: 280px;
+            height: 400px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+        }
+
+        .newspaper:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .newspaper.selected {
+            transform: scale(1.05) translateY(-15px);
+            z-index: 10;
+        }
+
+        .newspaper-cover {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border: 3px solid #d4af37;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.4s ease;
+            overflow: hidden;
+            background: rgba(26, 26, 46, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .newspaper-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 17px;
+            transition: transform 0.4s ease;
+        }
+
+        .newspaper:hover .newspaper-image {
+            transform: scale(1.05);
+        }
+
+        .article-detail {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border: 3px solid #d4af37;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.4s ease;
+            overflow-y: auto;
+        }
+
+        .article-detail.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .article-header {
+            padding: 30px;
+            border-bottom: 2px solid #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 12px 12px 0 0;
+        }
+
+        .article-title {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            color: #f4e4bc;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .article-meta {
+            font-size: 14px;
+            color: rgba(212, 175, 55, 0.8);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .article-excerpt {
+            font-size: 18px;
+            color: #f4e4bc;
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        .article-body {
+            padding: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #f4e4bc;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #d4af37;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #f4e4bc;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1500;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #d4af37;
+            animation: pulse 2s infinite;
+        }
+
+        .next-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(212, 175, 55, 0.1);
+            color: #d4af37;
+            border: 2px solid #d4af37;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            z-index: 1100;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .next-button:hover {
+            background: #d4af37;
+            color: #1a1a2e;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.4);
+        }
+
+        .next-button:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+                letter-spacing: 2px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .main-container {
+                padding: 20px;
+            }
+
+            .newspaper {
+                width: 240px;
+                height: 340px;
+            }
+
+            .article-title {
+                font-size: 24px;
+            }
+
+            .article-body {
+                padding: 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ethereal-threads" id="threads"></div>
+    <div class="floating-symbols" id="symbols"></div>
+    
+    <header>
+        <div class="header-content">
+            <div class="logo">THE HER TIMES</div>
+            <div class="caption">--The Evolution of Fashion through the Years</div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="newspapers-scroll" id="newspapersScroll">
+            <div class="newspaper" onclick="openArticle(1)">
+                <div class="newspaper-cover">
+                    <img src="../images/cover1.jpg" alt="Magazine Cover 1" class="newspaper-image">
+                </div>
+            </div>
+
+            <div class="newspaper" onclick="openArticle(2)">
+                <div class="newspaper-cover">
+                    <img src="../images/cover2.jpg" alt="Magazine Cover 2" class="newspaper-image">
+                </div>
+            </div>
+
+            <div class="newspaper" onclick="openArticle(3)">
+                <div class="newspaper-cover">
+                    <img src="../images/cover3.jpg" alt="Magazine Cover 3" class="newspaper-image">
+                </div>
+            </div>
+
+            <div class="newspaper" onclick="openArticle(4)">
+                <div class="newspaper-cover">
+                    <img src="../images/cover4.jpg" alt="Magazine Cover 4" class="newspaper-image">
+                </div>
+            </div>
+
+            <div class="newspaper" onclick="openArticle(5)">
+                <div class="newspaper-cover">
+                    <img src="../images/cover5.jpg" alt="Magazine Cover 5" class="newspaper-image">
+                </div>
+            </div>
+
+            <div class="newspaper" onclick="openArticle(6)">
+                <div class="newspaper-cover">
+                    <img src="../images/cover6.png" alt="Magazine Cover 6" class="newspaper-image">
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">→</div>
+    </div>
+
+    <a href="girlhoodunchained/index.html" class="next-button" title="Next Page">
+    NEXT PAGE →
+</a>
+
+
+    <div class="overlay" id="overlay" onclick="closeArticle()"></div>
+
+    <div class="article-detail" id="articleDetail">
+        <button class="close-btn" onclick="closeArticle()">×</button>
+        <div class="article-header">
+            <div class="article-title" id="articleTitle">Article Title</div>
+            <div class="article-meta" id="articleMeta">Published Date • Category</div>
+            <div class="article-excerpt" id="articleExcerpt">Article excerpt goes here...</div>
+        </div>
+        <div class="article-body" id="articleBody">
+            <p>Article content will be loaded here...</p>
+        </div>
+    </div>
+
+    <script>
+        // Create floating threads
+        function createThread() {
+            const thread = document.createElement('div');
+            thread.className = 'thread';
+            thread.style.left = Math.random() * 100 + 'vw';
+            thread.style.height = Math.random() * 200 + 100 + 'px';
+            thread.style.animationDelay = Math.random() * 20 + 's';
+            thread.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            
+            document.getElementById('threads').appendChild(thread);
+            
+            setTimeout(() => {
+                thread.remove();
+            }, 25000);
+        }
+        
+        // Create floating symbols
+        function createSymbol() {
+            const symbols = ['📰', '✨', '🌟', '💫', '🔮', '⭐', '📖', '🎭'];
+            const symbol = document.createElement('div');
+            symbol.className = 'symbol';
+            symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            symbol.style.left = Math.random() * 100 + 'vw';
+            symbol.style.animationDelay = Math.random() * 15 + 's';
+            symbol.style.animationDuration = (Math.random() * 5 + 12) + 's';
+            
+            document.getElementById('symbols').appendChild(symbol);
+            
+            setTimeout(() => {
+                symbol.remove();
+            }, 18000);
+        }
+        
+        // Initialize effects
+        setInterval(createThread, 3000);
+        setInterval(createSymbol, 4000);
+        
+        // Initial threads and symbols
+        for (let i = 0; i < 8; i++) {
+            setTimeout(createThread, i * 1000);
+            setTimeout(createSymbol, i * 1500);
+        }
+
+        const articles = {
+            1: {
+                title: "The L. C. C. The London Corset Company. La Samothrace:LONDON CORSET.",
+                meta: "1908",
+                excerpt: "Beneath the lace, she held her breath — and her truth.",
+                body: `
+                    <p>A newspaper clipping from The London Corset Company.</p>
+                    
+                    <p>Each corset held her a little tighter — not just her waist, but her dreams, her voice, her breath.</p>
+                    
+                    <p> Yet beneath every ribbon and rose, she remained: poised, patient, and quietly powerful.</p>
+                    
+                    <p>Corsets began to detach itself from fashion after WWI in 1918 due to  scarce materials and minimum usability</p>
+                `
+            },
+            2: {
+                title: "New York Daily News: MARILYN DEAD ",
+                meta: "6 August 1962",
+                excerpt: "The Marilyn Monroe Effect: Bold Beauty, Eternal Allure.",
+                body: `
+                    <p>Almost 65 years after her death, Monroe continues to remain a timeless and internationally renowned icon - and one of the biggest fashion inspirations.</p>
+                    
+                    <p>The "Marilyn Monroe Effect" has had a profound influence on the modern fashion community, shaping both aesthetics and attitudes towards femininity and beauty</p>
+                    
+                    <p>Her signature bold red lip and blonde bombshell style have left an unforgettable mark on modern pop culture. </p>
+                    
+                    <p>Monroe’s ability to combine seduction with sophistication has inspired contemporary designers to create clothing that empowers women to embrace their femininity without compromise.</p>
+                `
+            },
+            3: {
+                title: "US Weekly, Issue 483",
+                meta: "August 2004",
+                excerpt: "Girls Just Wanna Have Fun (and Fame!)",
+                body: `
+                    <p>In the glittering days of Y2K pop culture, US Weekly Issue 483 leaned into the fantasy of fame, fashion, and freedom — spotlighting teen idols and Hollywood’s “It Girls” dancing their way through club nights and red carpets. </p>
+                    
+                    <p>While the issue was laced with juicy gossip and must-know hookups, beneath the surface it reflected something deeper: the rise of a new kind of feminine power. </p>
+                    
+                    <p>These girls weren’t just partying — they were performing confidence, curating style, and claiming control over how they were seen.</p>
+                    
+                    <p>Wrapped in sequins and paparazzi flash, the party-club culture became a bold stage for young women to express rebellion, independence, and identity on their own terms.</p>
+                `
+            },
+            4: {
+                title: "TEEN CELEBRITY, ft. Britney Spears",
+                meta: "August 2004",
+                excerpt: "Get the Look: Britney's Bold Beauty.",
+                body: `
+                    <p>In the heart of the early 2000s, TEEN CELEBRITY captured the spirit of feminine confidence with a spotlight on pop icon Britney Spears.</p>
+                    
+                    <p>This issue wasn’t just about fashion and beauty tips — it was a cultural moment where teen girls were handed a guidebook to bold self-expression. </p>
+                    
+                    <p>The initiative highlighted the essential role of arts in healing and community building, inspiring similar projects worldwide where artists used their talents to support and connect with their communities.</p>
+                    
+                    <p>This story reminds us that sometimes the most powerful brand messages come not from advertising campaigns, but from authentic human moments that touch people's hearts and inspire them to take action.</p>
+                `
+            },
+            5: {
+                title: "ELLE Australia (Digital)",
+                meta: "May 2016",
+                excerpt: "Queen of Her Own World",
+                body: `
+                    <p>In its May 2016 digital issue, ELLE Australia brought the world to a standstill with Beyoncé on the cover — not just as a pop superstar, but as a powerful voice for modern womanhood. In an intimate and striking feature, Beyoncé opened up about what it means to be a feminist, a mother, and a woman who owns her story without compromise.</p>
+                    
+                    <p>This issue wasn’t just about beauty tips and celeb gossip — it was a manifesto wrapped in glamour. Beyoncé stood tall as a symbol of unapologetic feminine power: successful, self-defined, and unafraid to speak her truth.</p>
+                    
+                    <p>"I’m not just standing in my power," Beyoncé shares. "I’m building it. Brick by brick — through my voice, my choices, and the way I raise my daughter."</p>
+                    
+                    <p>In this issue, Beyoncé reflects on how feminism isn’t a label — it’s a lived experience. From boardroom to baby bottle, spotlight to silence, she shows us that confidence isn’t given — it’s claimed. ELLE invites readers to see femininity not as fragility, but as a force.</p>
+                `
+            },
+            6: {
+                title: "Harper’s Bazaar Digital – 2023",
+                meta: "2023",
+                excerpt: "Grace in Her Own Light",
+                body: `
+                    <p>In this striking 2023 digital issue, Harper’s Bazaar shines its spotlight on rising Thai actress and model Tontawan Tantivejakul, capturing a fresh wave of feminine power that is reshaping Asia’s entertainment and fashion industries. Tontawan, with her poised elegance and quiet strength, represents a new generation of global women — ones who are breaking boundaries not with noise, but with grace, purpose, and unshakable self-belief.</p>
+                    
+                    <p>From screen to runway, she moves with intention. This feature celebrates her journey — not just as a style icon, but as a voice of modern femininity: thoughtful, ambitious, and authentically rooted in her culture.</p>
+                    
+                    <p>"I don't think power always has to be loud," Tontawan reflects. "Sometimes it’s found in choosing your path quietly, with intention — and staying true to it, no matter how many times people tell you otherwise."</p>
+                    
+                    <p>With soft silhouettes and strong words, Tontawan’s presence in this issue speaks volumes. Harper’s Bazaar doesn’t just frame her as a rising star — it frames her as a modern muse redefining what it means to be feminine: not delicate, but deliberate. Not perfect, but powerful in her own evolution.</p>
+                `
+            }
+        };
+
+        function openArticle(id) {
+            const article = articles[id];
+            if (!article) return;
+
+            document.getElementById('articleTitle').textContent = article.title;
+            document.getElementById('articleMeta').textContent = article.meta;
+            document.getElementById('articleExcerpt').textContent = article.excerpt;
+            document.getElementById('articleBody').innerHTML = article.body;
+
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('articleDetail').classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Add selected state to newspaper
+            document.querySelectorAll('.newspaper').forEach(n => n.classList.remove('selected'));
+            document.querySelector(`.newspaper:nth-child(${id})`).classList.add('selected');
+        }
+
+        function closeArticle() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('articleDetail').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Remove selected state
+            document.querySelectorAll('.newspaper').forEach(n => n.classList.remove('selected'));
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeArticle();
+            }
+        });
+
+        // Smooth scroll for newspapers
+        const scrollContainer = document.getElementById('newspapersScroll');
+        let isScrolling = false;
+        let currentMagazineIndex = 0;
+        const totalMagazines = 6;
+
+        scrollContainer.addEventListener('wheel', function(e) {
+            if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                e.preventDefault();
+                this.scrollLeft += e.deltaY;
+            }
+        });
+
+        function scrollToNext() {
+            const magazineWidth = 280 + 30; // width + gap
+            currentMagazineIndex = (currentMagazineIndex + 1) % totalMagazines;
+            const scrollPosition = currentMagazineIndex * magazineWidth;
+            
+            scrollContainer.scrollTo({
+                left: scrollPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        function goToNextPage() {
+            // Add your next page navigation logic here
+            alert('Next page functionality - you can customize this to navigate to your next page!');
+        }
+    </script>
+</body>
+</html>

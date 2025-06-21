@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isabella d'Este - She Was the Muse Who Held the Pen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #2c1810, #8b4513, #d2691e);
+            color: #f4f1e8;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Canvas Background with Bleeding Effects */
+        .canvas-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(139, 69, 19, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(210, 105, 30, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(160, 82, 45, 0.2) 0%, transparent 50%);
+        }
+
+        .pigment-bleed {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><filter id="blur"><feGaussianBlur stdDeviation="3"/></filter></defs><circle cx="20" cy="30" r="15" fill="%23b8860b" opacity="0.3" filter="url(%23blur)"/><circle cx="70" cy="60" r="12" fill="%23cd853f" opacity="0.4" filter="url(%23blur)"/><circle cx="50" cy="80" r="8" fill="%23daa520" opacity="0.2" filter="url(%23blur)"/></svg>'),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M10,10 Q50,50 90,10 Q50,50 10,90 Q50,50 90,90 Q50,50 10,10" fill="none" stroke="%23f4f1e8" stroke-width="0.5" opacity="0.1"/></svg>');
+            animation: bleedAnimation 15s ease-in-out infinite;
+        }
+
+        @keyframes bleedAnimation {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        /* Header Section */
+        .header-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .header-content {
+            text-align: center;
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: #daa520;
+            margin-bottom: 1rem;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeInUp 2s ease forwards;
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #f4f1e8;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            opacity: 0;
+            animation: fadeInUp 2s ease 0.5s forwards;
+        }
+
+        .quote-emphasis {
+            font-size: 1.8rem;
+            color: #daa520;
+            font-style: italic;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 2s ease 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Musical Notes Animation */
+        .musical-notes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .note {
+            position: absolute;
+            font-size: 2rem;
+            color: #daa520;
+            opacity: 0.6;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .note:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .note:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+        .note:nth-child(3) { top: 70%; left: 20%; animation-delay: 4s; }
+        .note:nth-child(4) { top: 80%; right: 10%; animation-delay: 6s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Lace Pattern Overlay */
+        .lace-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><pattern id="lace" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="3" fill="none" stroke="%23f4f1e8" stroke-width="0.5" opacity="0.1"/><path d="M0,10 Q5,5 10,10 Q15,15 20,10" fill="none" stroke="%23f4f1e8" stroke-width="0.3" opacity="0.1"/></pattern><rect width="100" height="100" fill="url(%23lace)"/></svg>');
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        /* Dramatic Monologue Section */
+        .monologue-section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .monologue-content {
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .monologue-text {
+            font-size: 1.6rem;
+            line-height: 1.8;
+            color: #f4f1e8;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .monologue-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .brushstroke {
+            position: relative;
+            display: inline-block;
+            color: #daa520;
+            font-weight: 600;
+        }
+
+        .brushstroke::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #daa520, #b8860b);
+            animation: brush-stroke 2s ease forwards;
+        }
+
+        @keyframes brush-stroke {
+            to { width: 100%; }
+        }
+
+        /* Thread Reveal Section */
+        .thread-reveal {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.8), rgba(210, 105, 30, 0.6));
+            position: relative;
+        }
+
+        .thread-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #daa520;
+            text-align: center;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .fusion-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dress-sketch {
+            background: rgba(244, 241, 232, 0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.8s ease;
+            cursor: pointer;
+        }
+
+        .dress-sketch.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .dress-sketch:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .sketch-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #8b4513;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .sketch-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(45deg, #daa520, #b8860b);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sketch-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sketch-description {
+            color: #8b4513;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        /* Renaissance Ideals Popup */
+        .popup-trigger {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #daa520, #b8860b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .popup-trigger:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .popup-trigger::before {
+            content: "💭";
+            font-size: 1.5rem;
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #f4f1e8, #e6d7c3);
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            color: #8b4513;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        .popup-overlay.active .popup-content {
+            transform: scale(1);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #8b4513;
+            transition: color 0.3s ease;
+        }
+
+        .popup-close:hover {
+            color: #daa520;
+        }
+
+        .popup-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #8b4513;
+            text-align: center;
+        }
+
+        .ideal-vs-reality {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .ideal-column, .reality-column {
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .ideal-column {
+            background: rgba(139, 69, 19, 0.1);
+            border-left: 4px solid #8b4513;
+        }
+
+        .reality-column {
+            background: rgba(218, 165, 32, 0.1);
+            border-left: 4px solid #daa520;
+        }
+
+        .column-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .monologue-text {
+                font-size: 1.3rem;
+            }
+
+            .fusion-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .ideal-vs-reality {
+                grid-template-columns: 1fr;
+            }
+
+            .popup-content {
+                margin: 1rem;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas Background -->
+    <div class="canvas-background">
+        <div class="pigment-bleed"></div>
+        <div class="lace-overlay"></div>
+    </div>
+
+    <!-- Header Section -->
+    <section class="header-section">
+        <div class="musical-notes">
+            <div class="note">♪</div>
+            <div class="note">♫</div>
+            <div class="note">♪</div>
+            <div class="note">♬</div>
+        </div>
+
+        <div class="header-content">
+            <p class="subtitle">Isabella d'Este</p>
+            <h1 class="main-title">The Muse Who Held the Pen</h1>
+            <p class="quote-emphasis">"I am a woman who creates, not merely inspires"</p>
+        </div>
+    </section>
+
+    <!-- Dramatic Monologue Section -->
+    <section class="monologue-section">
+        <div class="monologue-content">
+            <p class="monologue-text">
+                They called me <span class="brushstroke">the First Lady of the Renaissance</span>, but I was never content to be merely ornamental. While others painted me as their muse, I held the brush myself.
+            </p>
+            <p class="monologue-text">
+                In my chambers at Mantua, I collected not just art, but <span class="brushstroke">ideas</span>. I commissioned works that bore my vision, my intellect, my defiance of what a woman should be.
+            </p>
+            <p class="monologue-text">
+                <span class="brushstroke">Fashion was my first canvas</span>—each gown a manifesto, each jewel a statement. I dressed to command respect, to challenge, to inspire not just beauty but awe.
+            </p>
+            <p class="monologue-text">
+                They expected me to be silent, decorative, <span class="brushstroke">submissive</span>. Instead, I became a patron, a diplomat, a force that shaped the very Renaissance they celebrate.
+            </p>
+            <p class="monologue-text">
+                I was the muse who refused to be silent—<span class="brushstroke">I was the muse who held the pen</span>.
+            </p>
+        </div>
+    </section>
+
+    <!-- Thread Reveal Section -->
+    <section class="thread-reveal">
+        <h2 class="thread-title">Fusion of Worlds: Isabella's Influence</h2>
+        <div class="fusion-gallery">
+            <div class="dress-sketch">
+                <h3 class="sketch-title">Tang Dynasty Elegance</h3>
+                <div class="sketch-image">
+                    <img src="../images/tang.jpg" alt="Tang Dynasty inspired dress">
+                </div>
+                <p class="sketch-description">
+                    Flowing silks with Renaissance structured bodice, featuring Tang Dynasty's bold color palette merged with Italian craftsmanship.
+                </p>
+            </div>
+            
+            <div class="dress-sketch">
+                <h3 class="sketch-title">Renaissance Refinement</h3>
+                <div class="sketch-image">
+                    <img src="../images/europe.jpg" alt="Renaissance inspired dress">
+                </div>
+                <p class="sketch-description">
+                    Classical Italian silhouettes enhanced with Eastern embroidery techniques and Islamic geometric patterns.
+                </p>
+            </div>
+            
+            <div class="dress-sketch">
+                <h3 class="sketch-title">Arabian Nights Meets Mantua</h3>
+                <div class="sketch-image">
+                    <img src="../images/arabic.jpg" alt="Arabian inspired dress">
+                </div>
+                <p class="sketch-description">
+                    Venetian velvets draped in Middle Eastern styles, with Isabella's signature jewelry adapted from Islamic art.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popup Trigger -->
+    <div class="popup-trigger" onclick="togglePopup()"></div>
+
+    <!-- Renaissance Ideals Popup -->
+    <div class="popup-overlay" id="popup">
+        <div class="popup-content">
+            <span class="popup-close" onclick="togglePopup()">&times;</span>
+            <h3 class="popup-title">Renaissance Ideals vs. Isabella's Reality</h3>
+            
+            <div class="ideal-vs-reality">
+                <div class="ideal-column">
+                    <h4 class="column-title">Expected: The Ideal Renaissance Woman</h4>
+                    <ul>
+                        <li>Silent and obedient to male authority</li>
+                        <li>Focused on domestic virtues</li>
+                        <li>Beautiful but intellectually passive</li>
+                        <li>Inspired art but didn't create it</li>
+                        <li>Married for political alliance</li>
+                        <li>Confined to private sphere</li>
+                    </ul>
+                </div>
+                
+                <div class="reality-column">
+                    <h4 class="column-title">Reality: Isabella's Subversion</h4>
+                    <ul>
+                        <li>Commanded respect through intelligence</li>
+                        <li>Actively participated in politics and diplomacy</li>
+                        <li>Collected and commissioned art as patron</li>
+                        <li>Corresponded with scholars and artists</li>
+                        <li>Controlled her own wealth and territories</li>
+                        <li>Influenced fashion and cultural trends</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <p style="text-align: center; font-style: italic; color: #8b4513;">
+                "Isabella d'Este transformed the role of Renaissance women from passive subjects to active creators of culture."
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Trigger brushstroke animations
+                    const brushstrokes = entry.target.querySelectorAll('.brushstroke');
+                    brushstrokes.forEach((stroke, index) => {
+                        setTimeout(() => {
+                            stroke.style.animationDelay = `${index * 0.5}s`;
+                        }, index * 200);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('.monologue-text, .dress-sketch').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Popup functionality
+        function togglePopup() {
+            const popup = document.getElementById('popup');
+            popup.classList.toggle('active');
+        }
+
+        // Close popup when clicking outside
+        document.getElementById('popup').addEventListener('click', (e) => {
+            if (e.target.classList.contains('popup-overlay')) {
+                togglePopup();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const popup = document.getElementById('popup');
+                if (popup.classList.contains('active')) {
+                    togglePopup();
+                }
+            }
+        });
+
+        // Smooth scrolling for better experience
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Add dynamic brushstroke effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            document.querySelector('.pigment-bleed').style.transform = `translate3d(0, ${rate}px, 0)`;
+        });
+    </script>
+</body>
+</html>

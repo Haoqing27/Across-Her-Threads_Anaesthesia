@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Their Threads Intertwine</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Amiri:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #2c1810, #8b4513);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: #f4e4bc;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .page-container {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .ethereal-threads {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+        
+        .thread {
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(to bottom, #d4af37, #daa520, #b8860b);
+            opacity: 0.6;
+            animation: weave 20s linear infinite;
+        }
+        
+        @keyframes weave {
+            0% {
+                transform: translateX(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateX(50vw) rotate(180deg);
+            }
+            100% {
+                transform: translateX(100vw) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .title-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            z-index: 10;
+            position: relative;
+        }
+        
+        .final-page-indicator {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: rgba(212, 175, 55, 0.8);
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+        
+        .main-title {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            background: linear-gradient(45deg, #d4af37, #daa520, #f4e4bc, #b8860b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 300% 300%;
+            animation: shimmer 8s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .women-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 3rem;
+            margin: 4rem 0;
+            position: relative;
+            z-index: 10;
+            min-height: 400px;
+        }
+        
+        .woman-figure {
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 2s ease-out forwards;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .woman-figure:nth-child(2) { animation-delay: 0.5s; }
+        .woman-figure:nth-child(3) { animation-delay: 1s; }
+        .woman-figure:nth-child(4) { animation-delay: 1.5s; }
+        
+        .woman-figure:hover {
+            transform: translateY(-10px) scale(1.05);
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .woman-image-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        
+        .wu-zetian .woman-image-container {
+            width: 200px;
+            height: 300px;
+            background: linear-gradient(135deg, #4a0e4e, #6a1b6a, #8b4a8b);
+            border-radius: 50% 50% 30% 30%;
+            box-shadow: 0 20px 40px rgba(74, 14, 78, 0.5);
+            overflow: hidden;
+        }
+        
+        .wu-zetian img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50% 50% 30% 30%;
+        }
+        
+        .wu-zetian .woman-image-container::before {
+            content: '👑';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            text-shadow: 0 0 20px #d4af37;
+            z-index: 10;
+        }
+        
+        .fatima .woman-image-container {
+            width: 200px;
+            height: 300px;
+            background: linear-gradient(135deg, #2c1810, #8b4513, #654321);
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 20px 40px rgba(44, 24, 16, 0.5);
+            overflow: hidden;
+        }
+        
+        .fatima img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50% 50% 20% 20%;
+        }
+        
+        .fatima .woman-image-container::before {
+            content: '📚';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            text-shadow: 0 0 20px #d4af37;
+            z-index: 10;
+        }
+        
+        .isabella .woman-image-container {
+            width: 200px;
+            height: 300px;
+            background: linear-gradient(135deg, #8b4513, #daa520, #b8860b);
+            border-radius: 50% 50% 25% 25%;
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.5);
+            overflow: hidden;
+        }
+        
+        .isabella img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50% 50% 25% 25%;
+        }
+        
+        .isabella .woman-image-container::before {
+            content: '🎨';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            text-shadow: 0 0 20px #d4af37;
+            z-index: 10;
+        }
+        
+        .woman-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: #d4af37;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .fatima .woman-name {
+            font-family: 'Amiri', serif;
+        }
+        
+        .about-me-btn {
+            padding: 0.8rem 1.5rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 2px solid #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+            color: #d4af37;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .about-me-btn:hover {
+            background: #d4af37;
+            color: #1a1a2e;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+        }
+        
+        .connecting-threads {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #d4af37, #daa520, #d4af37, transparent);
+            opacity: 0;
+            animation: threadConnect 3s ease-out 2s forwards;
+        }
+        
+        @keyframes threadConnect {
+            0% {
+                opacity: 0;
+                transform: scaleX(0);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scaleX(1);
+            }
+        }
+        
+        .narrative-text {
+            max-width: 900px;
+            text-align: center;
+            margin: 4rem auto;
+            padding: 2rem;
+            background: rgba(26, 26, 46, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .narrative-text p {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            color: #f4e4bc;
+            font-style: italic;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.5s ease-out 3s forwards;
+        }
+        
+        .quote-overlay {
+            margin: 4rem auto;
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            background: rgba(26, 26, 46, 0.6);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        
+        .quote-text {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            font-style: italic;
+            color: #d4af37;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            line-height: 1.4;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: quoteReveal 2s ease-out 4s forwards;
+            position: relative;
+        }
+        
+        @keyframes quoteReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .quote-text::before {
+            content: '"';
+            font-size: 4rem;
+            color: rgba(212, 175, 55, 0.6);
+            position: absolute;
+            top: -20px;
+            left: -30px;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .quote-text::after {
+            content: '"';
+            font-size: 4rem;
+            color: rgba(212, 175, 55, 0.6);
+            position: absolute;
+            bottom: -40px;
+            right: -30px;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 4rem auto;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 5s forwards;
+        }
+        
+        .btn {
+            padding: 1.2rem 2.5rem;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: 2px solid #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+            color: #d4af37;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .btn:hover {
+            background: #d4af37;
+            color: #1a1a2e;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.4);
+        }
+        
+        .btn-primary {
+            background: rgba(212, 175, 55, 0.2);
+        }
+        
+        .floating-symbols {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .symbol {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.4;
+            animation: floatSymbol 15s linear infinite;
+        }
+        
+        @keyframes floatSymbol {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .women-container {
+                flex-direction: column;
+                gap: 2rem;
+                align-items: center;
+            }
+            
+            .wu-zetian .woman-image-container, 
+            .fatima .woman-image-container, 
+            .isabella .woman-image-container {
+                width: 150px;
+                height: 225px;
+            }
+            
+            .wu-zetian img, .fatima img, .isabella img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .narrative-text p {
+                font-size: 1.2rem;
+            }
+            
+            .quote-text {
+                font-size: 1.6rem;
+            }
+            
+            .quote-text::before,
+            .quote-text::after {
+                font-size: 3rem;
+            }
+            
+            .quote-text::before {
+                top: -15px;
+                left: -20px;
+            }
+            
+            .quote-text::after {
+                bottom: -30px;
+                right: -20px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="ethereal-threads" id="threads"></div>
+        <div class="floating-symbols" id="symbols"></div>
+        
+        <div class="title-section">
+            <div class="final-page-indicator">About Hers</div>
+            <h1 class="main-title">Their Threads Intertwine</h1>
+        </div>
+        
+        <div class="women-container">
+            <div class="connecting-threads"></div>
+            <div class="woman-figure wu-zetian">
+                <div class="woman-image-container">
+                    <img src="../images/wuzetian.png" alt="Wu Zetian">
+                </div>
+                <div class="woman-name">Wu Zetian</div>
+                <a href="wuzetian.html" class="about-me-btn" onclick="navigateToNext('wu-zetian')">About Me</a>
+            </div>
+            <div class="woman-figure fatima">
+                <div class="woman-image-container">
+                    <img src="../images/fatima.png" alt="Fatima al-Fihri">
+                </div>
+                <div class="woman-name">Fatima al-Fihri</div>
+                <a href="fatima.html" class="about-me-btn" onclick="navigateToNext('fatima')">About Me</a>
+            </div>
+            <div class="woman-figure isabella">
+                <div class="woman-image-container">
+                    <img src="../images/isabella.png" alt="Isabella d'Este">
+                </div>
+                <div class="woman-name">Isabella d'Este</div>
+                <a href="isabella.html" class="about-me-btn" onclick="navigateToNext('isabella')">About Me</a>
+            </div>
+        </div>
+        
+        <div class="narrative-text">
+            <p>They were never meant to meet. Yet in breaking the rules of time, they found each other. And in doing so… they rewrote the future for us all.</p>
+        </div>
+        
+        <div class="quote-overlay">
+            <div class="quote-text">We are stitched not into history… but into defiance.</div>
+        </div>
+        
+        <div class="action-buttons">
+            <a href="#" class="btn btn-primary" onclick="showMoral()">Read the Moral</a>
+            <a href="newspaper.html" class="btn" onclick="shareThreads()">Next</a>
+        </div>
+    </div>
+    
+    <script>
+        // Create floating threads
+        function createThread() {
+            const thread = document.createElement('div');
+            thread.className = 'thread';
+            thread.style.left = Math.random() * 100 + 'vw';
+            thread.style.height = Math.random() * 200 + 100 + 'px';
+            thread.style.animationDelay = Math.random() * 20 + 's';
+            thread.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            
+            document.getElementById('threads').appendChild(thread);
+            
+            setTimeout(() => {
+                thread.remove();
+            }, 25000);
+        }
+        
+        // Create floating symbols
+        function createSymbol() {
+            const symbols = ['👑', '📚', '🎨', '✨', '🌟', '💫', '🔮', '⭐'];
+            const symbol = document.createElement('div');
+            symbol.className = 'symbol';
+            symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            symbol.style.left = Math.random() * 100 + 'vw';
+            symbol.style.animationDelay = Math.random() * 15 + 's';
+            symbol.style.animationDuration = (Math.random() * 5 + 12) + 's';
+            
+            document.getElementById('symbols').appendChild(symbol);
+            
+            setTimeout(() => {
+                symbol.remove();
+            }, 18000);
+        }
+        
+        // Initialize effects
+        setInterval(createThread, 3000);
+        setInterval(createSymbol, 4000);
+        
+        // Initial threads and symbols
+        for (let i = 0; i < 8; i++) {
+            setTimeout(createThread, i * 1000);
+            setTimeout(createSymbol, i * 1500);
+        }
+        
+        // Button interactions
+        function showMoral() {
+            alert("The Moral:\n\nHistory belongs not to those who merely witnessed it, but to those who dared to reshape it. Wu Zetian, Fatima al-Fihri, and Isabella d'Este remind us that true power lies not in following the rules, but in rewriting them entirely.\n\nTheir threads of defiance weave through time, creating a tapestry that says: the future belongs to those brave enough to claim it.");
+        }
+        
+        function shareThreads() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Their Threads Intertwine',
+                    text: 'Discover the extraordinary stories of Wu Zetian, Fatima al-Fihri, and Isabella d\'Este - three women who rewrote history through defiance.',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers without Web Share API
+                const text = 'Their Threads Intertwine: The extraordinary stories of Wu Zetian, Fatima al-Fihri, and Isabella d\'Este - three women who rewrote history through defiance. ' + window.location.href;
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Link copied to clipboard!');
+                });
+            }
+        }
+        
+        // Navigate to individual pages
+        function navigateToNext(character) {
+            // You can customize these URLs based on your file structure
+            const pages = {
+                'wu-zetian': 'wuzetian.html',
+                'fatima': 'fatima-al-fihri.html',
+                'isabella': 'isabella-d-este.html'
+            };
+            
+            if (pages[character]) {
+                window.location.href = pages[character];
+            } else {
+                alert(`Navigate to ${character} page - please update the URL in the navigateToNext function`);
+            }
+        }
+        
+        // Add subtle interaction effects
+        const figures = document.querySelectorAll('.woman-figure');
+        figures.forEach((figure, index) => {
+            const imageContainer = figure.querySelector('.woman-image-container');
+            
+            figure.addEventListener('mouseenter', () => {
+                if (imageContainer) {
+                    imageContainer.style.filter = 'brightness(1.2) saturate(1.3)';
+                }
+            });
+            
+            figure.addEventListener('mouseleave', () => {
+                if (imageContainer) {
+                    imageContainer.style.filter = 'brightness(1) saturate(1)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

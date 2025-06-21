@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wu Zetian - She Rewrote the Throne</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Noto Serif', serif;
+            background-color: #f5f0e8;
+            color: #333;
+            overflow-x: hidden;
+        }
+        .page-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #f5f0e8, #e8dfd5);
+        }
+        .page-title {
+            text-align: center;
+            padding: 20px;
+            color: #8c1515;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            color: #5a3921;
+        }
+        .robe-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .robe {
+            position: relative;
+            width: 300px;
+            height: 450px;
+            background: linear-gradient(to bottom, #d11c1c, #8c1515);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-radius: 150px 150px 0 0;
+            overflow: hidden;
+            transition: transform 0.5s ease;
+            cursor: pointer;
+        }
+        .robe:hover {
+            transform: scale(1.05);
+        }
+        .robe-edge {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: #f0c060;
+            clip-path: polygon(0 40%, 5% 0, 10% 40%, 15% 0, 20% 40%, 25% 0, 30% 40%, 35% 0, 40% 40%, 45% 0, 50% 40%, 55% 0, 60% 40%, 65% 0, 70% 40%, 75% 0, 80% 40%, 85% 0, 90% 40%, 95% 0, 100% 40%, 100% 100%, 0 100%);
+        }
+        .symbol {
+            position: absolute;
+            color: rgba(240, 192, 96, 0.7);
+            font-size: 1.5rem;
+            animation: float 8s infinite ease-in-out;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+        .monologue-container {
+            position: relative;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            height: 300px;
+            overflow: hidden;
+        }
+        .monologue {
+            position: absolute;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            transform: translateY(100%);
+            opacity: 0;
+            animation: scroll-text 20s linear infinite;
+        }
+        @keyframes scroll-text {
+            0% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            5% {
+                transform: translateY(50%);
+                opacity: 1;
+            }
+            45% {
+                transform: translateY(-50%);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+        }
+        .hidden-symbols {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 2;
+        }
+        .hidden-symbol {
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            background: #f0c060;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: #8c1515;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        .hidden-symbol:hover {
+            transform: scale(1.2);
+        }
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 80%;
+            max-width: 500px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .popup.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #8c1515;
+            padding-bottom: 10px;
+        }
+        .popup-title {
+            font-size: 1.5rem;
+            color: #8c1515;
+        }
+        .close-btn {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #8c1515;
+        }
+        .popup-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 99;
+        }
+        .overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .back-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background: #8c1515;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .back-btn.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <h1 class="page-title">Wu Zetian</h1>
+        <h2 class="subtitle">She Rewrote the Throne</h2>
+        
+        <div class="robe-container">
+            <div class="robe" id="robe">
+                <div class="robe-edge"></div>
+                <div class="hidden-symbols" id="hiddenSymbols">
+                    <div class="hidden-symbol" data-symbol="power">权</div>
+                    <div class="hidden-symbol" data-symbol="reform">改</div>
+                    <div class="hidden-symbol" data-symbol="justice">正</div>
+                    <div class="hidden-symbol" data-symbol="wisdom">智</div>
+                    <div class="hidden-symbol" data-symbol="female">女</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="monologue-container">
+            <div class="monologue">
+                "I did not steal the throne.<br>
+                I claimed what others feared to touch.<br>
+                <br>
+                When men whispered of weakness,<br>
+                I built temples that touched the sky.<br>
+                <br>
+                When scholars spoke of tradition,<br>
+                I wrote new characters with my own hand.<br>
+                <br>
+                They said a woman could not rule—<br>
+                So I became not just a ruler, but an Emperor.<br>
+                <br>
+                From concubine to Empress to Emperor,<br>
+                I carried the weight of centuries on my shoulders.<br>
+                <br>
+                My robes may be red,<br>
+                But my legacy is written in gold."
+            </div>
+        </div>
+        
+        <button class="back-btn" id="backBtn">Return to Robe</button>
+        
+        <div class="popup" id="popup">
+            <div class="popup-header">
+                <h3 class="popup-title" id="popupTitle">Breaking Confucian Gender Roles</h3>
+                <span class="close-btn" id="closeBtn">&times;</span>
+            </div>
+            <div class="popup-content" id="popupContent">
+                <!-- Content will be inserted here based on the symbol clicked -->
+            </div>
+        </div>
+        
+        <div class="overlay" id="overlay"></div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const robe = document.getElementById('robe');
+            const hiddenSymbols = document.getElementById('hiddenSymbols');
+            const symbols = document.querySelectorAll('.hidden-symbol');
+            const popup = document.getElementById('popup');
+            const overlay = document.getElementById('overlay');
+            const closeBtn = document.getElementById('closeBtn');
+            const popupTitle = document.getElementById('popupTitle');
+            const popupContent = document.getElementById('popupContent');
+            const backBtn = document.getElementById('backBtn');
+            
+            // Create floating symbols
+            const symbolChars = ['卍', '道', '佛', '太', '阴', '阳', '德', '礼', '仁', '义', '智', '信'];
+            const robeContainer = document.querySelector('.robe-container');
+            
+            for (let i = 0; i < 20; i++) {
+                const symbol = document.createElement('div');
+                symbol.className = 'symbol';
+                symbol.textContent = symbolChars[Math.floor(Math.random() * symbolChars.length)];
+                
+                // Random positioning
+                symbol.style.left = `${Math.random() * 80 + 10}%`;
+                symbol.style.top = `${Math.random() * 80 + 10}%`;
+                
+                // Random animation delay
+                symbol.style.animationDelay = `${Math.random() * 8}s`;
+                
+                robeContainer.appendChild(symbol);
+                
+                // Fade in after a delay
+                setTimeout(() => {
+                    symbol.style.opacity = '1';
+                }, 100 * i);
+            }
+            
+            // Show hidden symbols when robe is clicked
+            let robeClicked = false;
+            robe.addEventListener('click', function() {
+                if (!robeClicked) {
+                    hiddenSymbols.style.opacity = '1';
+                    backBtn.classList.add('visible');
+                    robeClicked = true;
+                }
+            });
+            
+            // Show popup when a symbol is clicked
+            symbols.forEach(symbol => {
+                symbol.addEventListener('click', function() {
+                    const symbolType = this.getAttribute('data-symbol');
+                    showPopup(symbolType);
+                });
+            });
+            
+            // Close popup when close button or overlay is clicked
+            closeBtn.addEventListener('click', closePopup);
+            overlay.addEventListener('click', closePopup);
+            
+            // Return to robe view
+            backBtn.addEventListener('click', function() {
+                hiddenSymbols.style.opacity = '0';
+                backBtn.classList.remove('visible');
+                robeClicked = false;
+            });
+            
+            // Function to show popup with content based on symbol clicked
+            function showPopup(symbolType) {
+                let title, content;
+                
+                switch(symbolType) {
+                    case 'power':
+                        title = 'The Power of Wu Zetian';
+                        content = 'Wu Zetian seized power in a world dominated by men. She rose from a concubine to become the only female emperor in Chinese history. Her reign lasted from 690 to 705 CE, establishing the Zhou Dynasty that interrupted the Tang Dynasty. Through political cunning, strategic alliances, and sometimes ruthless methods, she maintained her authority in a system designed to exclude women from power.';
+                        break;
+                    case 'reform':
+                        title = 'Reforms That Changed China';
+                        content = 'Wu Zetian implemented sweeping reforms that transformed China. She created a fair imperial examination system that allowed talented commoners to rise through government ranks based on merit rather than family connections. She reduced taxation on farmers, improved agricultural productivity, strengthened the military, and expanded China\'s territories. Many of her innovations remained long after her rule ended.';
+                        break;
+                    case 'justice':
+                        title = 'Justice and Cruelty';
+                        content = 'Wu Zetian\'s reign was marked by both justice and cruelty. She harshly punished corruption among officials and established the "winged wolves" - officials who received anonymous complaints about government corruption. While she brought justice to commoners, she was also known for her harsh treatment of opponents, including forced suicides, executions, and exile for those who challenged her authority.';
+                        break;
+                    case 'wisdom':
+                        title = 'Cultural Patron and Scholar';
+                        content = 'Despite lacking formal education, Wu Zetian was a patron of arts, literature, and Buddhism. She commissioned scholars to create new Chinese characters, supported the massive stone carvings at Longmen Grottoes, and commissioned the building of the Giant Wild Goose Pagoda. She gathered intellectuals at her court and engaged in philosophical debates, proving her intellectual capabilities despite conventional beliefs about women\'s intellectual inferiority.';
+                        break;
+                    case 'female':
+                        title = 'Breaking Confucian Gender Roles';
+                        content = 'Wu Zetian directly challenged the Confucian belief that women should remain subordinate to men. She transformed from a concubine in the imperial harem to the Dragon Throne itself, adopting masculine titles and creating rituals that placed her in the traditionally male role of connecting heaven and earth. She promoted Buddhism, which offered more equality for women, over Confucianism. She also elevated the status of her female relatives and appointed women to government positions, creating unprecedented opportunities for women in Chinese society.';
+                        break;
+                }
+                
+                popupTitle.textContent = title;
+                popupContent.textContent = content;
+                
+                popup.classList.add('active');
+                overlay.classList.add('active');
+            }
+            
+            // Function to close popup
+            function closePopup() {
+                popup.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fatima al-Fihri - She Built a University in Silence</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel:wght@400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Amiri', serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #d4af37;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        .page-container {
+            position: relative;
+            min-height: 100vh;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(139, 69, 19, 0.1) 0%, transparent 50%);
+        }
+        
+        .arabic-script {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.1;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='50' y='100' font-family='Amiri' font-size='24' fill='%23d4af37'%3Eالعلم نور%3C/text%3E%3Ctext x='200' y='200' font-family='Amiri' font-size='18' fill='%23d4af37'%3Eالمعرفة قوة%3C/text%3E%3Ctext x='100' y='300' font-family='Amiri' font-size='20' fill='%23d4af37'%3Eجامعة القرويين%3C/text%3E%3C/svg%3E");
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+        
+        .header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .page-number {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: rgba(212, 175, 55, 0.7);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+        
+        .title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: rgba(212, 175, 55, 0.8);
+            margin-bottom: 2rem;
+        }
+        
+        .study-scene {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .ink-bottles {
+            position: absolute;
+            left: 5%;
+            top: 20%;
+            display: flex;
+            gap: 1rem;
+            z-index: 5;
+        }
+        
+        .ink-bottle {
+            width: 60px;
+            height: 80px;
+            background: linear-gradient(to bottom, #8B4513, #654321);
+            border-radius: 10px 10px 50% 50%;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        .ink-bottle::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 15px;
+            background: #2c1810;
+            border-radius: 3px;
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+            100% { box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3); }
+        }
+        
+        .fatima-figure {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .fatima-figure:hover {
+            transform: scale(1.05);
+        }
+        
+        .cloak {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #2c1810, #8B4513, #654321);
+            border-radius: 50% 50% 20px 20px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            overflow: hidden;
+        }
+        
+        .cloak-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(212, 175, 55, 0.1) 20px, rgba(212, 175, 55, 0.1) 25px),
+                repeating-linear-gradient(-45deg, transparent, transparent 30px, rgba(139, 69, 19, 0.2) 30px, rgba(139, 69, 19, 0.2) 35px);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .cloak:hover .cloak-pattern {
+            opacity: 1;
+        }
+        
+        .maps-texts {
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            right: 10%;
+            bottom: 20%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            font-size: 0.8rem;
+            line-height: 1.2;
+        }
+        
+        .cloak:hover .maps-texts {
+            opacity: 1;
+        }
+        
+        .map-line, .text-line {
+            background: rgba(212, 175, 55, 0.2);
+            padding: 4px 8px;
+            border-radius: 3px;
+            border-left: 3px solid #d4af37;
+        }
+        
+        .monologue-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 20px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .monologue-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            text-align: center;
+            color: #e6d7c3;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .whisper-text {
+            font-style: italic;
+            color: rgba(212, 175, 55, 0.9);
+            font-size: 1.1rem;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        
+        .popup-trigger {
+            display: inline-block;
+            color: #d4af37;
+            text-decoration: underline;
+            cursor: pointer;
+            position: relative;
+            font-weight: bold;
+        }
+        
+        .popup {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(26, 26, 46, 0.95);
+            color: #e6d7c3;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            width: 300px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .popup::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: rgba(26, 26, 46, 0.95);
+        }
+        
+        .popup-trigger:hover .popup {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(-10px);
+        }
+        
+        .scroll-whisper {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: rgba(212, 175, 55, 0.6);
+            font-size: 0.9rem;
+            font-style: italic;
+            z-index: 20;
+        }
+        
+        .university-foundation {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .foundation-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #e6d7c3;
+            margin-bottom: 2rem;
+        }
+        
+        .year-highlight {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: #d4af37;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .fatima-figure {
+                width: 250px;
+                height: 320px;
+            }
+            
+            .monologue-text {
+                font-size: 1.1rem;
+            }
+            
+            .ink-bottles {
+                left: 2%;
+                top: 15%;
+            }
+            
+            .ink-bottle {
+                width: 40px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="arabic-script"></div>
+        
+        <div class="scroll-whisper">
+            *whispers follow your scroll*
+        </div>
+        
+        <header class="header">
+            <div class="page-number"></div>
+            <h1 class="title">Fatima al-Fihri</h1>
+            <p class="subtitle">"She Built a University in Silence"</p>
+        </header>
+            
+            <div class="fatima-figure">
+                <div class="cloak">
+                    <div class="cloak-pattern"></div>
+                    <div class="maps-texts">
+                        <div class="map-line">📍 Fez, Morocco - Sacred Routes</div>
+                        <div class="text-line">📜 Quranic Studies</div>
+                        <div class="map-line">🕌 Al-Qarawiyyin Mosque</div>
+                        <div class="text-line">📚 Islamic Jurisprudence</div>
+                        <div class="map-line">🌍 Trade Routes to Baghdad</div>
+                        <div class="text-line">✍️ Arabic Grammar</div>
+                        <div class="map-line">⭐ Centers of Learning</div>
+                        <div class="text-line">🔬 Mathematics & Astronomy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="monologue-container">
+            <div class="monologue-text">
+                In the year <span class="year-highlight">859 CE</span>, while the world slept, 
+                <span class="whisper-text">I laid the first stone</span>...
+                <br><br>
+                They say a woman's voice should not echo in halls of learning, 
+                yet <span class="whisper-text">my inheritance built the very walls</span> 
+                where scholars would debate for centuries to come.
+                <br><br>
+                The University of Al-Qarawiyyin rose not from royal decree, 
+                but from a <span class="popup-trigger">woman's quiet determination
+                    <div class="popup">
+                        <strong>Women's Hidden Legacy:</strong><br>
+                        Islamic scholarship owes much to women like Fatima al-Fihri, yet their contributions are often forgotten in historical records. She founded what many consider the world's oldest continuously operating university, predating European universities by centuries.
+                    </div>
+                </span>.
+                <br><br>
+                <span class="whisper-text">In silence, I shaped the minds of generations...</span>
+                <br>
+                <span class="whisper-text">In silence, I challenged what the world believed possible...</span>
+            </div>
+        </div>
+        
+        <div class="university-foundation">
+            <div class="foundation-text">
+                From a small mosque to a vast center of learning, Al-Qarawiyyin became the beacon that drew scholars from across the Islamic world and beyond. Students came to study theology, law, astronomy, mathematics, and philosophy - all made possible by one woman's vision and inheritance.
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Whisper sound effect simulation
+        let whisperCounter = 0;
+        const whisperTexts = [
+            "*the ink remembers her hands*",
+            "*scholars still echo her name*",
+            "*knowledge knows no gender*",
+            "*her legacy whispers through time*",
+            "*the university breathes with her spirit*"
+        ];
+        
+        function createWhisper() {
+            const whisper = document.createElement('div');
+            whisper.style.position = 'fixed';
+            whisper.style.top = Math.random() * window.innerHeight + 'px';
+            whisper.style.left = Math.random() * window.innerWidth + 'px';
+            whisper.style.color = 'rgba(212, 175, 55, 0.6)';
+            whisper.style.fontSize = '0.8rem';
+            whisper.style.fontStyle = 'italic';
+            whisper.style.pointerEvents = 'none';
+            whisper.style.zIndex = '5';
+            whisper.style.opacity = '0';
+            whisper.style.transition = 'opacity 2s ease-in-out';
+            whisper.textContent = whisperTexts[whisperCounter % whisperTexts.length];
+            
+            document.body.appendChild(whisper);
+            
+            setTimeout(() => {
+                whisper.style.opacity = '1';
+            }, 100);
+            
+            setTimeout(() => {
+                whisper.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(whisper);
+                }, 2000);
+            }, 3000);
+            
+            whisperCounter++;
+        }
+        
+        // Create whispers on scroll
+        let lastScrollTime = 0;
+        window.addEventListener('scroll', () => {
+            const now = Date.now();
+            if (now - lastScrollTime > 1000) { // Throttle to once per second
+                createWhisper();
+                lastScrollTime = now;
+            }
+        });
+        
+        // Animate Arabic script
+        const arabicScript = document.querySelector('.arabic-script');
+        let scriptRotation = 0;
+        
+        setInterval(() => {
+            scriptRotation += 0.1;
+            arabicScript.style.transform = `rotate(${scriptRotation}deg) scale(${1 + Math.sin(scriptRotation) * 0.1})`;
+        }, 100);
+        
+        // Initial whisper
+        setTimeout(createWhisper, 2000);
+        
+        // Periodic whispers
+        setInterval(createWhisper, 8000);
+    </script>
+</body>
+</html>
