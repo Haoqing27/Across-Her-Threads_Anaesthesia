@@ -1,58 +1,41 @@
-💻 Across Her Threads
-Fashion is political. Know your worth.
 
-📝 Description
-Across Her Threads is an interactive website project that challenges the way society defines femininity, using fashion as a bold, political tool. Through a mix of satire, storytelling, and design, the site explores how women throughout history have broken stereotypes and embraced their power.
+## 🎥 Demo Video  
+[![Watch the video]([https://img.youtube.com/vi/YOUR_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID_HERE](https://youtu.be/JS_zrMCGSMc))  
+Click the image to watch the full project walkthrough on YouTube.
 
-🎯 Purpose
-To empower young women to rethink societal expectations, reclaim their self-worth, and understand that fashion is more than appearance—it's identity, resistance, and voice.
+---
 
-🎯 Target Audience
-Teenage girls, young women, and anyone who has felt trapped by gender roles, beauty standards, or the need to be “chosen.”
+## 📝 Description  
+**GIRLHOOD UNCHAINED** is an interactive website that uses fashion as a lens to explore themes of identity, power, and gender roles. Through satire, storytelling, and digital design, it invites users to rethink what femininity means and empowers girls to reclaim their worth.
 
-🧠 Concept
-This project critiques harmful beauty narratives through an unusual shopping experience and celebrates powerful women in history who used fashion as part of their resistance. It encourages users to discover confidence from within, not through external validation.
+---
 
-🔑 Key Features
-Kiara: A satirical shopping site highlighting toxic beauty ideals.
+## 🎯 Purpose  
+To challenge harmful societal expectations placed on girls, advocate for self-worth and confidence, and show that **fashion is political**—a form of expression, rebellion, and empowerment.
 
-Their Threads Intertwine: Stories of Wu Zetian, Isabella, and Fatima, who reshaped history.
+---
 
-The Her Times: Letters and articles that spotlight intelligence, strength, and legacy.
+## 👩‍💻 Team Members  
+- Kiara (Project Creator)
 
-Fashion Evolution: A visual timeline linking trends to rising feminine power.
+---
 
-Heout: A confident, empowering fashion store—wear your crown.
+## 👥 Target Audience  
+This website is made for:  
+- Teenage girls and young women navigating self-image and societal pressure  
+- Feminist creators and educators  
+- Anyone interested in the intersection of fashion, identity, and social justice
 
-🛠️ Tools & Technologies
-HTML5
+---
 
-CSS3
+## 💡 Concept  
+This project began as a response to the way beauty standards and gender roles trap girls in roles of submission and desire. By reimagining shopping websites and rewriting history through women's voices, it invites users to unchain themselves from limiting beliefs.
 
-JavaScript
+---
 
-Bootstrap
-
-Custom animations & responsive design
-
-🚀 Enhancements (Planned)
-Improve visual flow and transitions between sections
-
-Add more emotion and depth to storytelling content
-
-Refine timeline visuals for fashion evolution
-
-Strengthen consistent branding across all pages
-
-📌 How to Use
-Clone the repository
-
-Open index.html in your browser
-
-Scroll through and interact with each section for the full experience
-
-Reflect, feel empowered, and share with someone who needs it 💌
-
-💬 Quote
-"You don’t need to be chosen to be worthy. You already are."
-
+## 🌟 Key Features  
+- **Kiara** – A satirical shopping site selling toxic beauty products to expose harmful ideals  
+- **Their Threads Intertwine** – Stories of Wu Zetian, Isabella, and Fatima who redefined power and femininity  
+- **The Her Times** – A zine with empowering letters and articles like *“To Girls Who Are Underestimated”*  
+- **Fashion Evolution** – A timeline from corsets to Y2K culture to modern icons like Beyoncé & Tu Tontawan  
+- **Heout** – A bold, empower
